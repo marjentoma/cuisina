@@ -1,0 +1,32 @@
+body {
+    background-image: url('../img/f.jpg');
+}
+.card-header {
+    background: white;
+}
+.row {
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+    /* margin-left: 50px; */
+    margin-top: 100px;
+    float: right;
+    margin-right: 0px;
+    background-color: transparent;
+}
+button {
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+    float: right;
+    background-color: white;
+}
+.badge, .input-group {
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.card {
+    margin-left: 350px;
+    margin-top: 150px;
+    /* background-color: transparent; */
+    background-color: white;
+    opacity: .9;
+    color: black;
+    padding: 20px;
+    width: 450px;
+}

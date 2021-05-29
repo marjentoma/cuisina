@@ -17,29 +17,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
 
     <link rel="stylesheet" href="../src/dashboard.css">
-    <!-- Vendor CSS Files -->
-    <!-- <link rel="stylesheet" href="./src/style.css"> -->
-    <title>Admin Dashboard</title>
+    
+    <title>Waiter View</title>
     <style>
     .row .col .card :hover {
         transform: scale(1.1);
         transition: 0.5s;
     }
+    body{
+    background-color:#e6eeff;
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-attachment:fixed;
+    }
     </style>
 </head>
 
 <body>
+<?php
+session_start();
+if($_SESSION['username']==""){
+    header("Location: ../waiterLogIn.php");
+}
+?>
     <!-- Header - Start  -->
     <header id="header">
 
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light "
-            style="background-color: white;width:85%;  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);padding:15px">
+        <nav class="navbar navbar-expand-lg navbar-light  ms-5 "
+            style="background-color:#e6eeff;width:82%;  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);">
             <!-- Container wrapper -->
             <div class="container">
                 <!-- Navbar brand -->
                 <a class="navbar-brand me-2">
-                    <h2> Cuisina</h2>
+                    <img class="img-fluid" src="../public/img/logo.PNG" alt="" style="width:100px;height:60px">
                 </a>
 
                 <!-- Right links -->
@@ -47,10 +58,10 @@
                     <a class="dropdown-toggle " id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
                         aria-expanded="false" style="text-decoration: none;">
                         <img src="https://mdbootstrap.com/img/new/avatars/2.jpg" class="rounded-circle" height="35"
-                            alt="" loading="lazy" /> <span class="align-middle">Waiter</span></a>
+                            alt="" loading="lazy" /> <span class="align-middle text-dark"><?php echo $_SESSION['username']?></span></a>
 
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                        <li><a class="dropdown-item" href="../waiterLogIn.php">Logout</a></li>
                     </ul>
                 </div>
                 <!-- Right elements -->
@@ -61,9 +72,9 @@
 
         <!--  side Navigation - Start  -->
     </header>
-    <nav id="sidemenu">
-        <i class="fas fa-user text-white mt-5  "></i>
-        <h2 class="text-white ms-5">Waiter</h2>
+    <nav id="sidemenu" style="background-color:#014e">
+        <i class="fas fa-user text-white mt-1 "></i>
+        <h2 class="text-white ms-5">Waiter</h2><hr class="text-white">
         <div class="main-menu ">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4 p-3">
                 <li><a class="nav-link active text-primary" href="waiter.php">Menu</a></li>
@@ -91,7 +102,7 @@
 
     <!-- Content - Start  -->
     <div id="content-wrapper">
-        <div class="container mb-5 ">
+        <div class="container mb-5 d-flex ">
             <!-- <select name="" id="tableOption" class="form-control w-25 float-start mr-5 ms-5 mt-3">
                 <option selected>Choose Meal Category</option>
                 <option value="breakfast">Breakfast</option>
@@ -99,7 +110,29 @@
                 <option value="dinner">Dinner</option>
                 <option value="dessert">Dessert</option>
             </select> -->
-            <select class="form-select w-50  mt-3 p-3 " id="selectTable" style="float:right" name="tables"
+
+            <div class="card col-3 mr-5 p-3 " style="margin-left:20%">
+            <h4 class="text-center"> Table Status</h4>
+            <?php
+                include_once('../admin/connection.php');
+                // echo $_SESSION['UserId'];
+                if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+                }else{
+                     $sql="select * from tables ";
+                    $result = $conn->query($sql);
+                    
+                    if ($result->num_rows > 0) {
+                        
+                        while($row = $result->fetch_assoc()){
+                        
+                    
+            ?>
+            <span><h6><?php echo "Table Number ".$row['table_no']?>: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['table_status']?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-pen" id="<?php echo $row['table_no']?>"></i></h6></span>
+            <?php }}}?>
+            </div>
+        
+            <!-- <select class="form-select w-50  mt-3 p-3 " id="selectTable" style="float:right" name="tables"
                 aria-label="Default select example">
                 <option selected>Choose Table</option>
                 <option value="1">Table 1</option>
@@ -112,10 +145,60 @@
                 <option value="8">Table 8</option>
                 <option value="9">Table 9</option>
                 <option value="10">Table 10</option>
-            </select>
+            </select> -->
         </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-
+        <script>
+            $('.fa-pen').on('click',function(){
+                $('#tableStatus').modal('show')
+                $("#table").val(this.id)
+            })
+        </script>
+        <?php
+            //  if ($conn->connect_error) {
+            //     die("Connection failed: " . $conn->connect_error);
+            //     }else{
+                
+            //     $sql="select * from menu where menu_type='breakfast' order by  menu_name asc";
+            //     $result = $conn->query($sql);
+                
+            //     if ($result->num_rows > 0) {
+                    
+            //         while($row = $result->fetch_assoc()){
+                    
+                ?>
+         <!-- Modal -->
+        <div class="modal fade" id="tableStatus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog w-25" style="height:50px">
+                <div class="modal-content p-0 ">
+                    <div class="modal-header p-3">
+                        <h6 class="modal-title " style="margin-left:100px" id="exampleModalLabel">Update table status</h6>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                <form method="post" class="form">
+                    <div class="modal-body p-3 text-center">
+                        
+                        <input type="hidden" id="table" name="tableNo" value="">
+                        <div class="form-floating text-center">
+                           
+                            <select class="form-select w-50  mt-3 p-3 mr-5" id="selectTable" style="float:right" name="tableStatus"
+                                aria-label="Default select example">
+                                
+                                <option value="available">Available</option>
+                                <option value="occupied">Occupied</option>
+                            </select>
+                        </div>
+                        <br>
+                        
+                        <button type="submit" id="" name="updateTable"class="btn btn-secondary bg-transparent text-dark"
+                            style="">Save</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+        <!-- End of the Modal -->
         <!-- Show lunch -->
         <!-- <div class="container p-0 m-0 float-end" > -->
         <h4 class="text-center ms-5">Breakfast</h4>
@@ -136,6 +219,7 @@
                     while($row = $result->fetch_assoc()){
                     
                 ?>
+         
             <div class="col col-3 m-1">
                 <div class="card p-3">
                     <img src="<?php echo $row['menu_photo']?>" class="img-fluid" alt=""
@@ -356,12 +440,12 @@
 
     <script>
     $(document).ready(function() {
-        $('#selectTable').change(function() {
-            //  $('#' + $(this).val());
-            var input = $(this).val();
-            console.log(input);
-            $('#tables').val(input)
-        });
+        // $('#selectTable').change(function() {
+        //     //  $('#' + $(this).val());
+        //     var input = $(this).val();
+        //     console.log(input);
+        //     $('#tables').val(input)
+        // });
 
         //any button with addOrder class will show the modal and get the price and name of menu
         $('.addOrder').click(function() {
@@ -399,7 +483,7 @@
             $('#addOrder').modal('hide');
 
         })
-    })
+    });
     </script>
     <script>
     if (window.history.replaceState) {
@@ -410,6 +494,37 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
+    if(isset($_POST['updateTable'])){
+        $status=$_POST['tableStatus'];
+        $tableNo=$_POST['tableNo'];
+       
+        $sql="update tables set table_status = '".$status."' where table_no='".$tableNo."'";
+        
+        if($conn->query($sql)===TRUE){
+            ?>
+    <!--fire a successful message using sweet alert -->
+
+    <script>
+    swal({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Table status updated successfully!',
+        showConfirmButton: false,
+        timer: 1800
+
+    })
+    setTimeout(() => {
+        location.reload()
+    }, 2000);
+    </script>
+
+
+    <?php
+        }else{
+        echo "error";
+        }
+    }
+ 
     
     if(isset($_POST['addOrder'])){
         $tableNo=$_POST['table'];
@@ -453,9 +568,7 @@
     <?php
         
             }       
-    };
+    }
 ?>
 </body>
-
-
 </html>

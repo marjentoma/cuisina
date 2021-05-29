@@ -27,7 +27,7 @@
         <div class="card  ">
             <center>
                 <h1 class="text-dark mb-5 text-align-center"> 🆆🅰🅸🆃🅴🆁  </h1>
-                <form action="../waiter/waiterLogin.php" method="post">
+                <form action="" method="post">
                 <div class="input-group mb-3 w-75">
                     <div class="input-group-prepend">
                         <span class="input-group-text bg-white" id="basic-addon1"><i
@@ -43,12 +43,57 @@
                     </div>
                     <input type="password" class="form-control" placeholder="Password" name="password">
                 </div>
-                <a href="./waiter/waiter.php" class="btn btn-default mb-4 float-end btn-rounded p-2" name="login"
-                    style="margin-right: 50px;width:100px;">𝐋𝐨𝐠𝐢𝐧</a>
+                <button class="btn btn-default mb-4 float-end btn-rounded p-2" name="login"
+                    style="margin-right: 50px;width:100px;">𝐋𝐨𝐠𝐢𝐧</button>
                 </form>
             </center>
         </div>
     </div>
+<?php 
+   include_once("./admin/connection.php");
+    session_start();
+    session_unset();
+   
+   if(isset($_POST['login'])){
+    $username=$_POST['username'];
+    $password=$_POST['password'];
+
+   }
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }else{
+        $sql = "SELECT * FROM `accounts` WHERE `username` = '".$username."' AND `password`= '".$password."' and position='2'";
+        // $result = $conn->query($sql);
+        $result = mysqli_query($conn,$sql);
+        $num_row = mysqli_num_rows($result);
+        $row=mysqli_fetch_array($result);
+        
+        
+        if( $num_row ==1)
+            {
+        
+        $_SESSION['accountId']=$row['account_id'];
+        $_SESSION['accountName']=$row['account_name'];
+        $_SESSION['username']=$row['username'];
+     
+        if( $num_row ==1 )
+            {
+       
+        header("Location: ./waiter/waiter.php");
+        }
+        else
+            {
+
+            echo "Error: " . $emailAddress . " and " . $password." does not exist/match";
+        }
+   
+    
+    $conn->close();
+    }
+
+   }
+   ?>
 
 </body>
 

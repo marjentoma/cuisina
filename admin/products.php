@@ -18,22 +18,36 @@
 
     <link rel="stylesheet" href="../src/dashboard.css">
     <!-- Vendor CSS Files -->
-    <!-- <link rel="stylesheet" href="./src/style.css"> -->
+    <link rel="stylesheet" href="./src/style.css">
     <title>Admin Dashboard</title>
+    <style>
+    body {
+       background-color:#e6eeff;
+        /* background-repeat: no-repeat;
+        background-size: cover; */
+        background-attachment: fixed;
+    }
+    </style>
 </head>
 
 <body>
+    <?php
+    session_start();
+    if($_SESSION['username']==""){
+        header("Location: ../adminLogIn.php");
+    }
+?>
     <!-- Header - Start  -->
     <header id="header">
 
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light "
-            style="background-color: white;width:85%; box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);padding:15px">
+        <nav class="navbar navbar-expand-lg navbar-light p-0"
+            style="background-color: #e6eeff;width:81%;margin-left:4%;box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);padding:15px">
             <!-- Container wrapper -->
             <div class="container">
                 <!-- Navbar brand -->
                 <a class="navbar-brand me-2">
-                    <h2> Cuisina</h2>
+                    <img class="img-fluid" src="../public/img/logo.PNG" alt="" style="width:100px;height:50px">
                 </a>
 
                 <!-- Right links -->
@@ -41,10 +55,11 @@
                     <a class="dropdown-toggle " id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
                         aria-expanded="false" style="text-decoration: none;">
                         <img src="https://mdbootstrap.com/img/new/avatars/2.jpg" class="rounded-circle" height="35"
-                            alt="" loading="lazy" /> <span class="align-middle">Waiter</span></a>
+                            alt="" loading="lazy" /> <span
+                            class="align-middle text-dark"><?php echo $_SESSION['username'] ?></span></a>
 
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                        <li><a class="dropdown-item text-dark" href="../home.html">Logout</a></li>
                     </ul>
                 </div>
                 <!-- Right elements -->
@@ -55,12 +70,13 @@
 
         <!--  side Navigation - Start  -->
     </header>
-    <nav id="sidemenu">
-        <i class="fas fa-user-cog text-white mt-5  "></i>
+    <nav id="sidemenu" style="width:19%;background-color:#014e;margin-right:10px;">
+        <i class="fas fa-user-cog text-white mt-3  "></i>
         <h2 class="text-white ms-5">Admin</h2>
+        <hr class="text-white">
         <div class="main-menu ">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4 p-3">
-                <li><a class="nav-link" href="dashboard.php">Home</a></li>
+                <li><a class="nav-link" href="dashboard.php"> Dashboard</a></li>
                 <li><a class="nav-link active text-primary" href="products.php">Products</a></li>
                 <li><a class="nav-link" href="transactions.php">Transactions</a></li>
                 <li><a class="nav-link" href="accounts.php">Accounts</a></li>
@@ -93,7 +109,7 @@
                 <option value="dinner">Dinner</option>
                 <option value="dessert">Dessert</option>
             </select>
-            <button class="btn btn-secondary float-end mt-1 mr-5" name="addMenu" data-bs-toggle="modal"
+            <button class="btn btn-info float-end mt-1 mr-5" name="addMenu" data-bs-toggle="modal"
                 data-bs-target="#addMenu">Add new menu</button>
         </div>
         <!-- Modal for adding menu-->
@@ -168,8 +184,12 @@
 
                     <div class="body">
                         <div class="card-header p-0 mt-1 bg-white text-center" style="border:0px solid white">
-                            <input type="hidden" class="id" value="<?php echo $row['menu_id'] ?>">
-                            <span class="availability"><?php echo $row['availability'] ?></span><br>
+                            <div class="card-header d-flex">
+                                <input type="hidden" class="id" value="<?php echo $row['menu_id'] ?>">
+                                <label for="">Product ID:</label>
+                                <span class="menuId float-start"><?php echo $row['menu_id'] ?></span><br>
+                                <span class="availability ms-4"><?php echo $row['availability'] ?></span><br>
+                            </div>
                             <span class="menuName">
                                 <h5><?php echo $row['menu_name'] ?></h6>
                             </span>
@@ -177,21 +197,27 @@
                         </div>
                         <input type="hidden" class="photo" value="<?php echo $row['menu_photo'] ?>">
                         <img id="images" class="img-fluid" src="<?php echo $row['menu_photo'] ?>">
-                        <div class="ms-5" style="font-size:16px">
+                        <div class="ms-5 mb-0" style="font-size:16px">
                             <span class="menuPrice ">
                                 <p class="mt-2" style="font-size:25px;margin-left:25%"><?php echo "₱".$row['price'] ?>
                                 </p>
-                            </span> <br>
+                            </span>
 
+                        </div>
+                        <div class="container justify-content-center">
+                            <label for="">Menu Type:&nbsp;<span class="menuType"><?php echo $row['menu_type'] ?></span>
+                            </label>
+                            <label><strong>Date Created:</strong> <span><?php echo $row['created_at'] ?></span></label>
+                            <label><strong>Date Updated:</strong> <span><?php echo $row['updated_at'] ?></span></label>
                         </div>
 
                         <div class="card-footer bg-white border-white d-flex p-0 ">
                             <!-- <a class="details"><i class="fa fa-info ms-5 p-3"></i></a> -->
-                            <button class="btn btn-default" name="update" data-bs-toggle="modal"
-                                data-bs-target="#updateMenu"><i class="fa fa-pen p-3 ms-5"></i></button>
-                            <a><i class="fa fa-trash-alt p-3"></i></a>
+                            <button class="btn btn-secondary w-100 p-0 " name="update" data-bs-toggle="modal"
+                                data-bs-target="#updateMenu"><i class="fa fa-pen p-3  text-center"></i>Edit</button>
+
                         </div>
-                        <!-- <button type="button" class="update"><i class="fa fa-pen"></i>Edit Menu</button> -->
+
                     </div>
                 </div>
 
@@ -257,9 +283,9 @@
     </div>
     <!-- ====END OF MODAL==== -->
     <div class="menu container" id="breakfast" style="display:none">
-        <h4 class="mt-5" style="margin-left:10%">BreakFast</h4>
+        <h4 class="mt-5" style="margin-left:15%">BreakFast</h4>
         <hr style="width:75%;margin-left:10%">
-        <div class="row " style="margin-left:250px">
+        <div class="row  mt-5" style="margin-left:150px">
             <?php
                     include_once('../admin/connection.php');
                     // echo $_SESSION['UserId'];
@@ -278,10 +304,14 @@
 
             <div class="col-3 md-4 card m-3 p-3 w-100">
 
-                <div>
+                <div class="body">
                     <div class="card-header p-0 mt-1 bg-white text-center" style="border:0px solid white">
-                        <input type="hidden" class="id" value="<?php echo $row['menu_id'] ?>">
-                        <span class="availability"><?php echo $row['availability'] ?></span><br>
+                        <div class="card-header d-flex">
+                            <input type="hidden" class="id" value="<?php echo $row['menu_id'] ?>">
+                            <label for="">Product ID:</label>
+                            <span class="menuId float-start"><?php echo $row['menu_id'] ?></span><br>
+                            <span class="availability ms-4"><?php echo $row['availability'] ?></span><br>
+                        </div>
                         <span class="menuName">
                             <h5><?php echo $row['menu_name'] ?></h6>
                         </span>
@@ -289,23 +319,29 @@
                     </div>
                     <input type="hidden" class="photo" value="<?php echo $row['menu_photo'] ?>">
                     <img id="images" class="img-fluid" src="<?php echo $row['menu_photo'] ?>">
-                    <div class="ms-5" style="font-size:16px">
+                    <div class="ms-5 mb-0" style="font-size:16px">
                         <span class="menuPrice ">
-                            <p class="mt-2" style="font-size:25px;margin-left:25%"><?php echo "₱".$row['price'] ?></p>
-                        </span> <br>
+                            <p class="mt-2" style="font-size:25px;margin-left:25%"><?php echo "₱".$row['price'] ?>
+                            </p>
+                        </span>
 
+                    </div>
+                    <div class="container justify-content-center">
+                        <label for="">Menu Type:&nbsp;<span class="menuType"><?php echo $row['menu_type'] ?></span>
+                        </label>
+                        <label><strong>Date Created:</strong> <span><?php echo $row['created_at'] ?></span></label>
+                        <label><strong>Date Updated:</strong> <span><?php echo $row['updated_at'] ?></span></label>
                     </div>
 
                     <div class="card-footer bg-white border-white d-flex p-0 ">
-                        <a class="details"><i class="fa fa-info ms-5 p-3"></i></a>
-                        <a><i class="fa fa-pen p-3"></i></a>
-                        <a><i class="fa fa-trash-alt p-3"></i></a>
+                        <!-- <a class="details"><i class="fa fa-info ms-5 p-3"></i></a> -->
+                        <button class="btn btn-secondary w-100 p-0 " name="update" data-bs-toggle="modal"
+                            data-bs-target="#updateMenu"><i class="fa fa-pen p-3  text-center"></i>Edit</button>
+
                     </div>
-                    <!-- <button type="button" class="update"><i class="fa fa-pen"></i>Edit Menu</button> -->
+
                 </div>
             </div>
-
-
             <?php
           }
         }
@@ -317,7 +353,7 @@
 
     <!--==Lunch Section ===  -->
     <div class="menu container" id="lunch" style="display:none">
-        <h4 class="mt-5" style="margin-left:10%">Lunch</h4>
+        <h4 class="mt-5" style="margin-left:15%">Lunch</h4>
         <hr style="width:75%;margin-left:10%">
         <div class="row   mt-5 " style="margin-left:150px">
             <?php
@@ -337,10 +373,14 @@
                     ?>
             <div class="col-3 md-4 card m-3 p-3 w-100">
 
-                <div>
+                <div class="body">
                     <div class="card-header p-0 mt-1 bg-white text-center" style="border:0px solid white">
-                        <input type="hidden" class="id" value="<?php echo $row['menu_id'] ?>">
-                        <span class="availability"><?php echo $row['availability'] ?></span><br>
+                        <div class="card-header d-flex">
+                            <input type="hidden" class="id" value="<?php echo $row['menu_id'] ?>">
+                            <label for="">Product ID:</label>
+                            <span class="menuId float-start"><?php echo $row['menu_id'] ?></span><br>
+                            <span class="availability ms-4"><?php echo $row['availability'] ?></span><br>
+                        </div>
                         <span class="menuName">
                             <h5><?php echo $row['menu_name'] ?></h6>
                         </span>
@@ -348,22 +388,29 @@
                     </div>
                     <input type="hidden" class="photo" value="<?php echo $row['menu_photo'] ?>">
                     <img id="images" class="img-fluid" src="<?php echo $row['menu_photo'] ?>">
-                    <div class="ms-5" style="font-size:16px">
+                    <div class="ms-5 mb-0" style="font-size:16px">
                         <span class="menuPrice ">
-                            <p class="mt-2" style="font-size:25px;margin-left:25%"><?php echo "₱".$row['price'] ?></p>
-                        </span> <br>
+                            <p class="mt-2" style="font-size:25px;margin-left:25%"><?php echo "₱".$row['price'] ?>
+                            </p>
+                        </span>
 
+                    </div>
+                    <div class="container justify-content-center">
+                        <label for="">Menu Type:&nbsp;<span class="menuType"><?php echo $row['menu_type'] ?></span>
+                        </label>
+                        <label><strong>Date Created:</strong> <span><?php echo $row['created_at'] ?></span></label>
+                        <label><strong>Date Updated:</strong> <span><?php echo $row['updated_at'] ?></span></label>
                     </div>
 
                     <div class="card-footer bg-white border-white d-flex p-0 ">
+                        <!-- <a class="details"><i class="fa fa-info ms-5 p-3"></i></a> -->
+                        <button class="btn btn-secondary w-100 p-0 " name="update" data-bs-toggle="modal"
+                            data-bs-target="#updateMenu"><i class="fa fa-pen p-3  text-center"></i>Edit</button>
 
-                        <a><i class="fa fa-pen p-3"></i></a>
-                        <a><i class="fa fa-trash-alt p-3"></i></a>
                     </div>
 
                 </div>
             </div>
-
 
             <?php
           }
@@ -375,7 +422,7 @@
     </div>
     <!-- ===Dinner Section=== -->
     <div class="menu container" id="dinner" style="display:none">
-        <h4 class="mt-5" style="margin-left:10%">Dinner</h4>
+        <h4 class="mt-5" style="margin-left:15%">Dinner</h4>
         <hr style="width:75%;margin-left:10%">
         <div class="row mt-5 " style="margin-left:150px">
             <?php
@@ -395,10 +442,14 @@
                     ?>
             <div class="col-3 md-4 card m-3 p-3 w-100">
 
-                <div>
+                <div class="body">
                     <div class="card-header p-0 mt-1 bg-white text-center" style="border:0px solid white">
-                        <input type="hidden" class="id" value="<?php echo $row['menu_id'] ?>">
-                        <span class="availability"><?php echo $row['availability'] ?></span><br>
+                        <div class="card-header d-flex">
+                            <input type="hidden" class="id" value="<?php echo $row['menu_id'] ?>">
+                            <label for="">Product ID:</label>
+                            <span class="menuId float-start"><?php echo $row['menu_id'] ?></span><br>
+                            <span class="availability ms-4"><?php echo $row['availability'] ?></span><br>
+                        </div>
                         <span class="menuName">
                             <h5><?php echo $row['menu_name'] ?></h6>
                         </span>
@@ -406,23 +457,29 @@
                     </div>
                     <input type="hidden" class="photo" value="<?php echo $row['menu_photo'] ?>">
                     <img id="images" class="img-fluid" src="<?php echo $row['menu_photo'] ?>">
-                    <div class="ms-5" style="font-size:16px">
+                    <div class="ms-5 mb-0" style="font-size:16px">
                         <span class="menuPrice ">
-                            <p class="mt-2" style="font-size:25px;margin-left:25%"><?php echo "₱".$row['price'] ?></p>
-                        </span> <br>
+                            <p class="mt-2" style="font-size:25px;margin-left:25%"><?php echo "₱".$row['price'] ?>
+                            </p>
+                        </span>
 
+                    </div>
+                    <div class="container justify-content-center">
+                        <label for="">Menu Type:&nbsp;<span class="menuType"><?php echo $row['menu_type'] ?></span>
+                        </label>
+                        <label><strong>Date Created:</strong> <span><?php echo $row['created_at'] ?></span></label>
+                        <label><strong>Date Updated:</strong> <span><?php echo $row['updated_at'] ?></span></label>
                     </div>
 
                     <div class="card-footer bg-white border-white d-flex p-0 ">
                         <!-- <a class="details"><i class="fa fa-info ms-5 p-3"></i></a> -->
-                        <a><i class="fa fa-pen p-3"></i></a>
-                        <a><i class="fa fa-trash-alt p-3"></i></a>
+                        <button class="btn btn-secondary w-100 p-0 " name="update" data-bs-toggle="modal"
+                            data-bs-target="#updateMenu"><i class="fa fa-pen p-3  text-center"></i>Edit</button>
+
                     </div>
-                    <!-- <button type="button" class="update"><i class="fa fa-pen"></i>Edit Menu</button> -->
+
                 </div>
             </div>
-
-
             <?php
           }
         }
@@ -433,7 +490,7 @@
     </div>
     <!-- ===Dessert Section==== -->
     <div class="menu container" id="dessert" style="display:none">
-        <h4 class="mt-5" style="margin-left:10%">Dessert</h4>
+        <h4 class="mt-5" style="margin-left:15%">Dessert</h4>
         <hr style="width:75%;margin-left:10%">
         <div class="row  mt-5 " style="margin-left:150px">
             <?php
@@ -451,12 +508,16 @@
                     while($row = $result->fetch_assoc()){
 
                     ?>
-            <div class="col-3 md-4 card ms-5 p-3 w-100">
+            <div class="col-3 md-4 card m-3 p-3 w-100">
 
-                <div>
+                <div class="body">
                     <div class="card-header p-0 mt-1 bg-white text-center" style="border:0px solid white">
-                        <input type="hidden" class="id" value="<?php echo $row['menu_id'] ?>">
-                        <span class="availability"><?php echo $row['availability'] ?></span><br>
+                        <div class="card-header d-flex">
+                            <input type="hidden" class="id" value="<?php echo $row['menu_id'] ?>">
+                            <label for="">Product ID:</label>
+                            <span class="menuId float-start"><?php echo $row['menu_id'] ?></span><br>
+                            <span class="availability ms-4"><?php echo $row['availability'] ?></span><br>
+                        </div>
                         <span class="menuName">
                             <h5><?php echo $row['menu_name'] ?></h6>
                         </span>
@@ -464,22 +525,29 @@
                     </div>
                     <input type="hidden" class="photo" value="<?php echo $row['menu_photo'] ?>">
                     <img id="images" class="img-fluid" src="<?php echo $row['menu_photo'] ?>">
-                    <div class="ms-5" style="font-size:16px">
+                    <div class="ms-5 mb-0" style="font-size:16px">
                         <span class="menuPrice ">
-                            <p class="mt-2" style="font-size:25px;margin-left:25%"><?php echo "₱".$row['price'] ?></p>
-                        </span> <br>
+                            <p class="mt-2" style="font-size:25px;margin-left:25%"><?php echo "₱".$row['price'] ?>
+                            </p>
+                        </span>
 
                     </div>
+                    <div class="container justify-content-center">
+                        <label for="">Menu Type:&nbsp;<span class="menuType"><?php echo $row['menu_type'] ?></span>
+                        </label>
+                        <label><strong>Date Created:</strong> <span><?php echo $row['created_at'] ?></span></label>
+                        <label><strong>Date Updated:</strong> <span><?php echo $row['updated_at'] ?></span></label>
+                    </div>
+
                     <div class="card-footer bg-white border-white d-flex p-0 ">
                         <!-- <a class="details"><i class="fa fa-info ms-5 p-3"></i></a> -->
-                        <button class="update btn btn-default"><i class="fa fa-pen p-3"></i></button>
-                        <a><i class="fa fa-trash-alt p-3"></i></a>
+                        <button class="btn btn-secondary w-100 p-0 " name="update" data-bs-toggle="modal"
+                            data-bs-target="#updateMenu"><i class="fa fa-pen p-3  text-center"></i>Edit</button>
+
                     </div>
-                    <!-- <button type="button" class="update"><i class="fa fa-pen"></i>Edit Menu</button> -->
+
                 </div>
             </div>
-
-
             <?php
           }
         }
@@ -512,28 +580,49 @@
             console.log('nifunction raman');
             $('#' + $(this).val()).show();
         });
-        $(".update").click(function() {
 
+        //trigger modal for inserting new menu
+        $("#button1").click(function() {
+
+            $('#addMenu').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+            $('#addMenu').modal('show');
+
+            $(".close").click(() => {
+                $('#addMenu').modal('hide');
+
+            })
+        })
+
+
+        //trigger modal for updating menu
+        $(".update").click(function() {
+            var menuId = $(this).siblings('.id').val();
             var menuName = $(this).siblings('span.menuName').children().html();
             var menuPhoto = $(this).siblings('input.photo').val();
+            console.log(menuId + menuName + menuPhoto);
+            var menuPrice = $(this).siblings('span.menuPrice').html();
+            var menuPrice = menuPrice.substr(3);
+            $('#updateMenu').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+            $('#menuType').val($(this).siblings(".menuType").html())
+            $('#availability').val($(this).siblings(".availability").html())
 
+            $('#updateMenu').modal('show');
+            $('#menuName').val(menuName);
+            $('#menuPhoto').val(menuPhoto);
+            $('#menuPrice').val(menuPrice);
+            $("#menuNo").val(menuId)
+            $(".close").click(() => {
+                $('#updateMenu').modal('hide');
+
+            })
 
         })
-        $('#menuType').val($(this).siblings(".menuType").html())
-        $('#availability').val($(this).siblings(".availability").html())
-
-        // $('#updateMenu').modal('show');
-        $('#menuName').val(menuName);
-        console.log(menuName);
-
-        $('#menuPhoto').val(menuPhoto);
-        $('#menuPrice').val(menuPrice);
-        // $("#menuNo").val(menuId)
-        $(".close").click(() => {
-            $('#updateMenu').modal('hide');
-
-        })
-
         // })
         // });
     });

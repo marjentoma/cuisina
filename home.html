@@ -31,11 +31,11 @@
 
 <body>
     <!-- =====HEADER===== -->
-    <header id="header" class="fixed-top d-flex align-items-center header-transparent">
+    <header id="header" class="fixed-top d-flex align-items-center header-transparent ">
         <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-            <div class="logo me-auto">
-                <h1><a href="index.html">Cuisina</a></h1>
+            <div class="logo me-auto p-0">
+                <img class="img-fluid" src="./public/img/logo.PNG" alt="" style="width:70px;height:80px">>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
             </div>
@@ -47,11 +47,12 @@
                     <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
                     <li class="dropdown"><a href="#"><span>Login as</span> <i class="fa fa-chevron-down"></i></a>
                         <ul>
-                            <li><a href="admin.html">Admin</a></li>
-                            <li><a href="waiter.html">Waiter </a>
-                                </li></ul>
-                                </ul>
-                                <i class="bi bi-list mobile-nav-toggle"></i>
+                            <li><a href="adminLogIn.php">Admin</a></li>
+                            <li><a href="waiterLogIn.php">Waiter </a>
+                            </li>
+                        </ul>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
 
         </div>
@@ -75,7 +76,9 @@
                                 <h3 class="animate__animated animate__fadeInUp text-light" style="size:34px">Where the
                                     food speaks with your plate<span><span></h3>
                                 <div>
-                                    <a href="#menu" class="btn-menu animate__animated animate__fadeInUp scrollto">Go To Kitchen</a>
+                                    <button type="button"
+                                        class=" bg-transparent btn-menu animate__animated animate__fadeInUp scrollto"
+                                        data-bs-toggle="modal" data-bs-target="#gotoKitchen">Go To Kitchen</button>
 
                                 </div>
                             </div>
@@ -92,7 +95,7 @@
                                     <span>Pinoy Foods, </span>don't hesitate to dine with us.
                                 </h4>
                                 <div>
-                                    <a href="#menu" class="btn-menu animate__animated animate__fadeInUp scrollto">View
+                                    <a href="./waiter/menu.php" class="btn-menu animate__animated animate__fadeInUp scrollto">View
                                         menu</a>
 
                                 </div>
@@ -106,15 +109,10 @@
                         <div class="carousel-background"><img src="assets/img/slide/slide-3.jpg" alt=""></div>
                         <div class="carousel-container">
                             <div class="carousel-content">
-                                <h2 class="animate__animated animate__fadeInDown">Sequi ea ut et est quaerat</h2>
-                                <p class="animate__animated animate__fadeInUp">Ut velit est quam dolor ad a aliquid qui
-                                    aliquid. Sequi
-                                    ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut.
-                                    Similique ea
-                                    voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore
-                                    modi architecto.</p>
+                                <h2 class="animate__animated animate__fadeInDown">We Serve Passion</h2>
+                                <h4 class="animate__animated animate__fadeInUp text-light">Beyond the boundaries of taste</h4>
                                 <div>
-                                    <a href="#menu" class="btn-menu animate__animated animate__fadeInUp scrollto">View
+                                    <a href="./waiter/menu.php" class="btn-menu animate__animated animate__fadeInUp scrollto">View
                                         menu</a>
 
 
@@ -138,32 +136,43 @@
 
             </div>
         </div>
-        <!--=== Modal==== -->
-        <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-center p-5">
-                <div class="modal-content md-5">
-                    <div class="modal-header border-bottom-0 text-center">
-                        <h5 class="modal-title text-center" id="exampleModalLabel">Login as</h5>
+        <!-- Modal -->
+        <div class="modal fade" id="gotoKitchen" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog w-25" style="height:50px">
+                <div class="modal-content p-0">
+                    <div class="modal-header p-3">
+                        <h6 class="modal-title " style="margin-left:100px" id="exampleModalLabel">Kitchen</h6>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <select class="form-select px-3" aria-label="Default select example">
-                            <option value="1">Waiter</option>
-                            <option value="2">Admin</option>
-                        </select>
-
+                    <div class="modal-body p-3">
+                        <div class="form-floating ">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Kitchen Code">
+                            <label for="floatingInput">Please enter the code</label>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save
-                            changes</button>
+                    <div class="modal-footer ">
+                        <button type="button" class="btn btn-secondary bg-transparent text-dark"
+                            data-bs-dismiss="modal"> <i class="fas fa-times"></i></button>
+                        <button type="button" id="kitchen" class="btn btn-secondary bg-transparent text-dark"
+                            style="">Go to
+                            Kitchen</button>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- ====End of modal==== -->
-    </section><!-- End Hero -->
+        <!-- End of the Modal -->
 
+    </section><!-- End Hero -->
+<script>
+let button = document.querySelector('#kitchen')
+button.addEventListener('click', function(){
+    if(document.querySelector('#floatingInput').value=="kitchen123"){
+        window.location.href="./kitchen/landing.php";
+    }else{
+    alert("Wrong kitchen code!");
+    }
+})
+</script>
     <main id="main">
 
         <!-- ======= Dish of the day Section ======= -->
@@ -311,9 +320,9 @@
                 </div>
             </div>
 
-            <div class="map">
+            <!-- <div class="map">
                 <iframe style="border:0; width: 100%; height: 350px;"
-                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
+                    src="https://www.google.com/maps/dir/10.3531837,123.9164006/google+map+cusina+cebu/@10.3439957,123.9090414,14z/data=!3m1!4b1!4m9!4m8!1m1!4e1!1m5!1m1!1s0x33a999abc7e63a1d:0x706723cb6d215300!2m2!1d123.9339262!2d10.3278429"
                     frameborder="0" allowfullscreen></iframe>
             </div>
 
@@ -345,34 +354,31 @@
                             <p>+1 5589 55488 51<br>+1 5589 22475 14</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name"
-                                required>
-                        </div>
-                        <div class="col-md-6 form-group mt-3 mt-md-0">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email"
-                                required>
-                        </div>
+            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
                     </div>
-                    <div class="form-group mt-3">
-                        <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject"
+                    <div class="col-md-6 form-group mt-3 mt-md-0">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Your Email"
                             required>
                     </div>
-                    <div class="form-group mt-3">
-                        <textarea class="form-control" name="message" rows="5" placeholder="Message"
-                            required></textarea>
-                    </div>
-                    <div class="my-3">
-                        <div class="loading">Loading</div>
-                        <div class="error-message"></div>
-                        <div class="sent-message">Your message has been sent. Thank you!</div>
-                    </div>
-                    <div class="text-center"><button type="submit">Send Message</button></div>
-                </form>
+                </div>
+                <div class="form-group mt-3">
+                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+                </div>
+                <div class="form-group mt-3">
+                    <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+                </div>
+                <div class="my-3">
+                    <div class="loading">Loading</div>
+                    <div class="error-message"></div>
+                    <div class="sent-message">Your message has been sent. Thank you!</div>
+                </div>
+                <div class="text-center"><button type="submit">Send Message</button></div>
+            </form>
 
             </div>
         </section><!-- End Contact Section -->
@@ -423,7 +429,12 @@
 
     <!-- Template Main JS File -->
     <script src="./public/js/main.js"></script>
-
+    <script>
+        $('#gotoKitchen').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+    </script>
     </header>
 </body>
 

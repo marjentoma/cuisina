@@ -21,6 +21,12 @@
     <!-- <link rel="stylesheet" href="./src/style.css"> -->
     <title>Admin Dashboard</title>
     <style>
+    body {
+        font-family: 'Mirza', cursive;
+        background-color:#e6eeff;
+       
+    }
+
     .row .col .card :hover {
         transform: scale(1.1);
         transition: 0.5s;
@@ -29,6 +35,13 @@
 </head>
 
 <body>
+    <?php
+    session_start();
+    if($_SESSION['username']==""){
+    header("Location: ../waiterLogIn.php");
+}
+
+?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
         integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
         crossorigin="anonymous"></script>
@@ -36,13 +49,13 @@
     <header id="header">
 
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light "
-            style="background-color: white;width:85%;  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);padding:15px">
+        <nav class="navbar navbar-expand-lg navbar-light  ms-5 p-0"
+            style="background-color:#e6eeff;width:82%;  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);padding:15px">
             <!-- Container wrapper -->
             <div class="container">
                 <!-- Navbar brand -->
                 <a class="navbar-brand me-2">
-                    <h2> Cuisina</h2>
+                    <img class="img-fluid" src="../public/img/logo.PNG" alt="" style="width:100px;height:60px">
                 </a>
 
                 <!-- Right links -->
@@ -50,10 +63,11 @@
                     <a class="dropdown-toggle " id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
                         aria-expanded="false" style="text-decoration: none;">
                         <img src="https://mdbootstrap.com/img/new/avatars/2.jpg" class="rounded-circle" height="35"
-                            alt="" loading="lazy" /> <span class="align-middle">Waiter</span></a>
+                            alt="" loading="lazy" /> <span
+                            class="align-middle text-dark"><?php echo $_SESSION['username']?></span></a>
 
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                        <li><a class="dropdown-item" href="../waiterLogIn.php">Logout</a></li>
                     </ul>
                 </div>
                 <!-- Right elements -->
@@ -64,7 +78,7 @@
 
         <!--  side Navigation - Start  -->
     </header>
-    <nav id="sidemenu">
+    <nav id="sidemenu" style="background-color:#014e">
         <i class="fas fa-user text-white mt-5  "></i>
         <h2 class="text-white ms-5">Waiter</h2>
         <div class="main-menu ">
@@ -94,15 +108,15 @@
 
     <!-- Content - Start  -->
     <div id="content-wrapper">
-        <div class="container mb-5 ">
+        <div class="container ">
 
 
 
-            <div class="col-sm-6" style=" padding:20px;">
+            <div class="" style="">
                 <!-- <div class="container"> -->
-                <table class="table table-hover align-middle table-responsive-lg "
-                    style="margin-left:150px;width:900px">
-                    <thead class="table-light p-5">
+                <table class="table  align-middle table-responsive-lg text-dark table-striped  h-auto"
+                    style="margin-left:130px;width:95%">
+                    <thead class=" p-5">
                         <tr>
                             <th scope="col">Table</th>
                             <th scope="col">Order</th>
@@ -127,7 +141,7 @@
                     die("Connection failed: " . $conn->connect_error);
                 }else{
                     
-                    $sql="select table_orders.order_id, table_orders.table_no,menu.menu_name,menu.price, table_orders.quantity,table_orders.bill,table_orders.status, table_orders.ordered_at from ((table_orders inner join menu on table_orders.menu_id=menu.menu_id)inner join tables on tables.table_no=table_orders.table_no) order by ordered_at asc";
+                    $sql="select table_orders.order_id, table_orders.table_no,menu.menu_name,menu.price, table_orders.quantity,table_orders.bill,table_orders.status, table_orders.ordered_at from ((table_orders inner join menu on table_orders.menu_id=menu.menu_id)inner join tables on tables.table_no=table_orders.table_no) order by ordered_at desc";
          
                     $result = $conn->query($sql);
       
@@ -148,8 +162,8 @@
                             <td class="status"><?php echo '₱'.$row['bill']?></td>
                             <td class="status"><?php echo $row['status']?></td>
                             <td class="price"><?php echo $row['ordered_at']?></td>
-                            <td><button class="btn " data-bs-toggle="modal" data-bs-target="#updateOrder"><i
-                                        class="fa fa-pen"></i></button></td>
+                            <td><button class="btn editStatus" data-bs-toggle="modal" data-bs-target="#updateOrder"><i
+                                        class="fa fa-pen text-danger"></i></button></td>
                         </tr>
                     </tbody>
 
@@ -167,7 +181,7 @@
                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content"
-                                style="width:80%; margin-left:auto; margin-right:auto; text-align:left;padding: 10px;padding:20px">
+                                style="width:80%; margin-left:auto; margin-right:auto; text-align:left;background-color:rgba(2, 103, 124, 0.9)">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLongTitle">Edit Order</h5>
                                     <button type="button" data-bs-toggle="modal" data-bs-target="#updateOrder"
@@ -191,11 +205,12 @@
                                             </select><br>
                                         </div>
 
-                                        <input type="submit" name="updateOrder" value="Confirm Status"><br>
+                                        <button class="btn btn-info text-light" type="submit"
+                                            name="updateOrder">Confirm Status</button><br>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" data-bs-toggle="modal"
+                                    <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                         data-bs-target="#updateOrder">Cancel</button>
                                 </div>
                             </div>
@@ -210,25 +225,32 @@
     </div>
 
     </div>
+<script>
+     $('.editStatus').click(function(){
+        $('#orderId').val($(this).parent().siblings('.tableNo').children('.orderId').val())
+       
+
+        })
+</script>
     <?php
-         include_once('../admin/connection.php');
                 // echo $_SESSION['UserId'];
                 if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
-                }else{
+                }
                 
                 $sql="select * from menu order by menu_type asc, menu_name asc";
                 $result = $conn->query($sql);
-                }
+               
 
         //updating the order status
 
     if(isset($_POST['updateOrder'])){
         $status=$_POST['status'];
         $orderId=$_POST['orderId'];
+        echo `<script>alert($status+$orderId)</script>`;
         $sql="update table_orders set status = '".$status."' where order_id='".$orderId."'";
         
-        if($conn->query($sql)==TRUE){
+        if($conn->query($sql)===TRUE){
             ?>
     <!--fire a successful message using sweet alert -->
 
@@ -248,9 +270,12 @@
 
 
     <?php
+        }else{
+        echo "error";
         }
     }
-
+    
+ 
     ?>
 
     </script>

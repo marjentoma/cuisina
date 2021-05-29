@@ -1,14 +1,17 @@
 body {
     font-family: 'Mirza', cursive;
+  background-color:#e6eeff;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed
 }
 #sidemenu {
     position: fixed;
-    width: 205px;
-    ;
+    width: 250px;
     height: auto;
     top: 0px;
     bottom: 0;
-    background: rgb(43, 43, 43);
+    background: #014e;
     font-size: 20px;
     /* z-index:-1; */
     /* overflow: hidden; */
@@ -230,7 +233,7 @@ li.link-active a, li.link-active a:hover, li.link-active a:focus {
     font-size: 20px;
 }
 .card {
-    box-shadow: rgba(0, 0, 0, 0.8)0px 0px 10px;
+    box-shadow: rgba(0, 0, 0, 0.5)0px 0px 10px;
     border: 1px solid gray;
 }
 

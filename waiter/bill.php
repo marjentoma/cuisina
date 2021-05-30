@@ -322,7 +322,7 @@ if($_SESSION['username']==""){
                     <label for="Waiter's Name: ">Waiter's Signature<input type="text"
                             class="form-control p-0  w-100 readonly" name="waiter" value="" required></label>
                      <p class="legal"><strong>Thank you for dining with us
-                            <?php echo 'Table Number '.$row['table_no']?>1. Please come again!</strong>
+                            <?php echo 'Table Number '.$row['table_no']?>. Please come again!</strong>
                     </p>
                     <button type="submit" class="btn btn-info w-100" name="paid"><span class="fas fa-check"></span> Confirm Bill</button>
                    
@@ -380,7 +380,7 @@ if($_SESSION['username']==""){
             $datePaid=date("Y-m-d h:i:s");
             $query="update table_orders set status='Paid', paid_at = '".$datePaid."' where table_no='".$tableNo."'";
             // $sql="update tables set total_bill='".$totalBill."', table_status = 'available' where table_no = '".$tableNo."' ";
-            $sql="insert into sales (table_no, customer_name, quantity, bill, paid_at, signature) values('".$table_no."', '".$customer."', '".$quantity."', '".$totalBill."', '".$datePaid."', '".$waiter."')";
+            $sql="insert into sales (table_no, customer_name, quantity, bill, paid_at, signature) values('".$tableNo."', '".$customer."', '".$quantity."', '".$totalBill."', '".$datePaid."', '".$waiter."')";
             if($conn->query($query)===TRUE && $conn->query($sql)===TRUE){
               
                 ?>

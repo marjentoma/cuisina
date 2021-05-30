@@ -21,9 +21,8 @@
     <!-- <link rel="stylesheet" href="./src/style.css"> -->
     <title>Admin Dashboard</title>
     <style>
-  
-        body {
-        background-color:#e6eeff;
+    body {
+        background-color: #e6eeff;
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
@@ -32,7 +31,7 @@
 </head>
 
 <body>
-<?php
+    <?php
     session_start();
     if($_SESSION['username']==""){
         header("Location: ../adminLogIn.php");
@@ -48,7 +47,7 @@
             <div class="container">
                 <!-- Navbar brand -->
                 <a class="navbar-brand me-2">
-                     <img class="img-fluid" src="../public/img/logo.PNG" alt="" style="width:100px;height:50px">
+                    <img class="img-fluid" src="../public/img/logo.PNG" alt="" style="width:100px;height:50px">
                 </a>
 
                 <!-- Right links -->
@@ -56,7 +55,8 @@
                     <a class="dropdown-toggle " id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown"
                         aria-expanded="false" style="text-decoration: none;">
                         <img src="https://mdbootstrap.com/img/new/avatars/2.jpg" class="rounded-circle" height="35"
-                            alt="" loading="lazy" /> <span class="align-middle text-dark"><?php echo $_SESSION['username'];?></span></a>
+                            alt="" loading="lazy" /> <span
+                            class="align-middle text-dark"><?php echo $_SESSION['username'];?></span></a>
 
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item " href="../adminLogIn.php">Logout</a></li>
@@ -106,18 +106,17 @@
             <div class="row">
 
                 <div class="card col-sm-6 p-2 ms-3 ">
-                    <div class="container p-0  mb-3 d-flex" >
+                    <div class="container p-0  mb-3 d-flex">
                         <span style="margin-right:30%">
                             <h4>Total Sales</h4>
                         </span>
 
                         <input class="form-control me-2   p-4" style="width:35%" type="search"
-                            placeholder="Quick Search..." aria-label="Search" id="input">
-                        <button class="btn btn-outline-secondary " type="submit"
-                            style="padding:1px 15px"><i class="fas fa-search"></i></button>
+                            placeholder="Quick Search..." aria-label="Search" id="myInput">
+                        <button class="btn btn-outline-secondary " type="submit" style="padding:1px 15px"><i
+                                class="fas fa-search"></i></button>
                     </div>
-                    <table class="table w-25 table-hover "
-                        id="sales" style="">
+                    <table class="table w-25 table-hover " id="sales" style="">
                         <thead>
                             <th scope="col ">Sale_Id</th>
                             <th scope="col ">Table Number</th>
@@ -137,7 +136,7 @@
                         die("Connection failed: " . $conn->connect_error);
                     } else {
 
-                        $sql = "SELECT * from sales";
+                        $sql = "SELECT * from sales order by paid_at desc";
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
@@ -146,7 +145,7 @@
 
                     ?>
 
-                            <tr>
+                            <tr class="data">
                                 <td class=""><?php echo $row['sale_id'] ?></td>
                                 <td class=""><?php echo $row['table_no'] ?></td>
                                 <td class=""><?php echo $row['customer_name'] ?></td>
@@ -167,7 +166,7 @@
                     </table>
                 </div>
 
-                <div class="card col-sm-4 ms-5 align-items-center">
+                <div class="card col-sm-4 ms-5 align-items-center pb-5" style="height:fit-content">
                     <div class="container p-0 mr-3 mb-3 d-flex">
                         <span class="mt-3 ">
                             <h4 class="ms-5"> Total Sales of the Day</h4>
@@ -260,13 +259,15 @@
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
-        // $(document).ready(function() {
-        //     $('#sales').DataTable({
-        //         "scrollY": "50vh",
-        //         "scrollCollapse": true,
-        //     });
-        //     $('.dataTables_length').addClass('bs-select');
-        // });
+        $(document).ready(function() {
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                
+                $("#sales .data").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
         </script>
 </body>
 

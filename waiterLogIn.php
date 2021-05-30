@@ -26,30 +26,32 @@
 
         <div class="card  ">
             <center>
-                <h1 class="text-dark mb-5 text-align-center"> 🆆🅰🅸🆃🅴🆁  </h1>
+                <h1 class="text-dark mb-5 text-align-center"> 🆆🅰🅸🆃🅴🆁 </h1>
                 <form action="" method="post">
-                <div class="input-group mb-3 w-75">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text bg-white" id="basic-addon1"><i
-                                class="fa fa-user p-1 bg-"></i></span>
+                    <div class="input-group mb-3 w-75">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white" id="basic-addon1"><i
+                                    class="fa fa-user p-1 bg-"></i></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Username" name="username">
                     </div>
-                    <input type="text" class="form-control" placeholder="Username" name="username">
-                </div>
 
-                <div class="input-group mb-3 w-75">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text bg-white" id="basic-addon1"><i
-                                class="fa fa-lock p-1 bg-"></i></span>
+                    <div class="input-group mb-3 w-75">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white" id="basic-addon1"><i
+                                    class="fa fa-lock p-1 bg-"></i></span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="Password" name="password">
                     </div>
-                    <input type="password" class="form-control" placeholder="Password" name="password">
-                </div>
-                <button class="btn btn-default mb-4 float-end btn-rounded p-2" name="login"
-                    style="margin-right: 50px;width:100px;">𝐋𝐨𝐠𝐢𝐧</button>
+                    <a class="btn btn-info mb-4  btn-rounded p-2" style="box-shadow:rgba(0,0,0,.1)0px 0px 10px" href="./home.html"><i
+                            class="fas fa-long-arrow-alt-left"></i> Back To Home</a>
+                    <button class="btn btn-default mb-4 float-end btn-rounded p-2" name="login"
+                        style="margin-right: 50px;width:100px;">𝐋𝐨𝐠𝐢𝐧</button>
                 </form>
             </center>
         </div>
     </div>
-<?php 
+    <?php 
    include_once("./admin/connection.php");
     session_start();
     session_unset();

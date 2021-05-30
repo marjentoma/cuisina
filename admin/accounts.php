@@ -131,6 +131,7 @@
                     <tr>
                         <th scope="col">Account Id</th>
                         <th scope="col">Name</th>
+                        <th scope="col">Username</th>
                         <th scope="col">Password</th>
                         <th scope="col">Position</th>
                         <th scope="col">Created_At</th>
@@ -146,7 +147,7 @@
         die("Connection failed: " . $conn->connect_error);
       }else{
        
-        $sql="SELECT accounts.account_id, accounts.account_name, accounts.password, position.position_name, accounts.created_at, accounts.updated_at, accounts.deleted_at from accounts inner join position on accounts.position=position.position_id where deleted_at IS NULL order by position.position_name asc, accounts.account_name asc ";
+        $sql="SELECT accounts.account_id, accounts.account_name, accounts.username, accounts.password, position.position_name, accounts.created_at, accounts.updated_at, accounts.deleted_at from accounts inner join position on accounts.position=position.position_id where deleted_at IS NULL order by position.position_name asc, accounts.account_name asc ";
         $result = $conn->query($sql);
         
         if ($result->num_rows > 0) {
@@ -158,6 +159,7 @@
                     <tr id="data">
                         <td class="col id"><?php echo $row['account_id']; ?></td>
                         <td class="col name"><?php echo $row['account_name']; ?></td>
+                        <td class="col username"><?php echo $row['username']; ?></td>
                         <td class="col password"><?php echo $row['password']; ?></td>
                         <td class="col position"><?php echo $row['position_name']; ?></td>
                         <td class="col"><?php echo $row['created_at']; ?></td>
@@ -165,7 +167,7 @@
 
                         <td class="col">
 
-                            <button class="btn btn-info update" data-bs-toggle="modal" data-bs-target="#updateUser"><i
+                            <button class="btn btn-info update" ><i
                                     class="fa fa-pen text-danger"></i></button>
                             <a href="../admin/deleteAccount.php?id=<?php echo $row['account_id']; ?>">
                                 <button type="button" class="btn  btn-xs"><i
@@ -201,6 +203,11 @@
                             <input type="text" class="form-control" name="accountName" id="floatingName"
                                 placeholder="name@example.com">
                             <label for="floatingName"> Name</label>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" name="username" id="floatingUsername"
+                                placeholder="name@example.com">
+                            <label for="floatingUsername"> Username</label>
                         </div>
                         <div class="form-floating mb-2">
                             <input type="password" class="form-control" name="accountPassword" id="floatingPassword"
@@ -243,7 +250,7 @@
                 style="width:80%; margin-left:auto; margin-right:auto; text-align:left;background-color:rgba(2, 103, 124, 0.9);">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Edit Account</h5>
-                    <button type="button" class="close" aria-label="Close">
+                    <button type="button" class="close" aria-label="Close" data-bs-dismiss="modal">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -256,6 +263,11 @@
                             <input type="text" id="accountName" class="form-control" name="accountName"
                                 placeholder="name@example.com">
                             <label for="accountName"> Name</label>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" name="username" id="username"
+                                placeholder="name@example.com">
+                            <label for="floatingUsername"> Username</label>
                         </div>
 
                         <div class="form-floating mb-2">
@@ -318,6 +330,7 @@
 
             $accountId = $(this).parent().siblings('.id').html()
             $accountName = $(this).parent().siblings('.name').html()
+            $accountUsername=$(this).parent().siblings('.username').html()
             $accountPassword = $(this).parent().siblings('.password').html()
             $accountPosition = $(this).parent().siblings('.position').html()
             $("#accountId").val($accountId)
@@ -329,6 +342,7 @@
 
             $("#accountPassword").val($accountPassword)
             $("#accountName").val($accountName)
+            $("#username").val($accountUsername)
             $(".close").click(() => {
                 $('#updateUser').modal('hide');
 
@@ -357,6 +371,7 @@
       if(isset($_POST['addAccount'])){
         
           $accountName=$_POST['accountName'];
+            $username=$_POST['username'];
           $accountPassword=$_POST['accountPassword'];
           $position=$_POST['position'];
           
@@ -365,8 +380,8 @@
           date_default_timezone_set('Asia/Manila');
           $dateCreated=date("Y-m-d h:i:s");
           
-              $sql = "insert into accounts(account_name, password, position, created_at) 
-              VALUES('".$accountName."','".$accountPassword."','".$position."','".$dateCreated."') ";
+              $sql = "insert into accounts(account_name, username, password, position, created_at) 
+              VALUES('".$accountName."','".$username."','".$accountPassword."','".$position."','".$dateCreated."') ";
               if ($conn->query($sql) === TRUE) {
               ?>
 
@@ -397,13 +412,13 @@
         $accountName=$_POST['accountName'];
         $accountPassword=$_POST['accountPassword'];
         $position=$_POST['position'];
-        
+        $username=$_POST['username'];
 
         //set default timezone to asia or manila-Philippines timezone
         date_default_timezone_set('Asia/Manila');
         $dateUpdated=date("Y-m-d h:i:s");
         // echo "<script>alert('$acccountId+$accountName+$accountPassword+$position+$dateUpdated')</script>";
-            $sql = "update accounts set account_name='".$accountName."', password='".$accountPassword."', position='".$position."', updated_at='".$dateUpdated."' where account_id='".$accountId."'";
+            $sql = "update accounts set account_name='".$accountName."', username='".$username."', password='".$accountPassword."', position='".$position."', updated_at='".$dateUpdated."' where account_id='".$accountId."'";
             if ($conn->query($sql) === TRUE) {
             ?>
 

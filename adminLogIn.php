@@ -44,6 +44,8 @@
                     </div>
                     <input type="password" class="form-control" placeholder="Password" name="password">
                 </div>
+                   <a class="btn btn-info mb-4  btn-rounded p-2" style="box-shadow:rgba(0,0,0,.1)0px 0px 10px" href="./home.html"><i
+                            class="fas fa-long-arrow-alt-left"></i> Back To Home</a>
                 <button type="submit" class="btn btn-default mb-4 float-end btn-rounded p-2" name="login" type="submit"
                     style="margin-right: 50px;width:100px;">𝐋𝐨𝐠𝐢𝐧</button>
                 </form>

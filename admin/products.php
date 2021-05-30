@@ -22,7 +22,7 @@
     <title>Admin Dashboard</title>
     <style>
     body {
-       background-color:#e6eeff;
+        background-color: #e6eeff;
         /* background-repeat: no-repeat;
         background-size: cover; */
         background-attachment: fixed;
@@ -100,7 +100,7 @@
     <!-- Navigation - End  -->
 
     <!-- Content - Start  -->
-    <div id="content-wrapper" style="margin-left:25%;">
+    <div id="content-wrapper" style="margin-left:30%;">
         <div class="d-flex" style="margin-left:20%">
             <select id="mealOption" class="form-select w-25 mr-5" aria-label="Default select example">
                 <option value="all"> Show All</option>
@@ -108,6 +108,7 @@
                 <option value="lunch">Lunch</option>
                 <option value="dinner">Dinner</option>
                 <option value="dessert">Dessert</option>
+                <option value="drinks">Drinks</option>
             </select>
             <button class="btn btn-info float-end mt-1 mr-5" name="addMenu" data-bs-toggle="modal"
                 data-bs-target="#addMenu">Add new menu</button>
@@ -139,14 +140,15 @@
                                 <option value="lunch">Lunch</option>
                                 <option value="dinner">Dinner</option>
                                 <option value="dessert">Dessert</option>
+                                <option value="drinks">Drinks</option>
                             </select><br>
-                            <select class="form-select" name="availabilty" aria-label="Default select example">
-                                <option selected>Availability</option>
+                            <select class="form-select" name="availability" aria-label="Default select example">
+                                <!-- <option selected>Availability</option> -->
                                 <option value="available">Available</option>
                                 <option value="not available">Unavailable</option>
                             </select><br>
                             <div class="form-floating mb-3">
-                                <input type="number" class="form-control p-1" id="menuPrice" name="menuPrice"
+                                <input type="text" class="form-control p-1" id="menuPrice" name="menuPrice"
                                     placeholder="Price">
                                 <label for="menuPrice">Price</label>
                             </div>
@@ -162,7 +164,7 @@
         <!-- ===End of modAL=== -->
         <!--==All Menu Section ===  -->
         <div class="menu container" id="all">
-            <h4 class="mt-5" style="margin-left:10%">All Menu</h4>
+            <h4 class="mt-5" style="margin-left:20%">All Menu</h4>
             <hr style="width:75%;margin-left:10%">
             <div class="row mt-5 " style="right:0px;">
                 <?php
@@ -183,8 +185,8 @@
                 <div class="col-3 md-4 card m-3 p-3 w-100">
 
                     <div class="body">
-                        <div class="card-header p-0 mt-1 bg-white text-center" style="border:0px solid white">
-                            <div class="card-header d-flex">
+                        <div class="card-header p-0 mt-1 bg-white text-center div1" style="border:0px solid white">
+                            <div class="card-header d-flex div2">
                                 <input type="hidden" class="id" value="<?php echo $row['menu_id'] ?>">
                                 <label for="">Product ID:</label>
                                 <span class="menuId float-start"><?php echo $row['menu_id'] ?></span><br>
@@ -197,7 +199,7 @@
                         </div>
                         <input type="hidden" class="photo" value="<?php echo $row['menu_photo'] ?>">
                         <img id="images" class="img-fluid" src="<?php echo $row['menu_photo'] ?>">
-                        <div class="ms-5 mb-0" style="font-size:16px">
+                        <div class="ms-5 mb-0 divPrice" style="font-size:16px">
                             <span class="menuPrice ">
                                 <p class="mt-2" style="font-size:25px;margin-left:25%"><?php echo "₱".$row['price'] ?>
                                 </p>
@@ -205,7 +207,8 @@
 
                         </div>
                         <div class="container justify-content-center">
-                            <label for="">Menu Type:&nbsp;<span class="menuType"><?php echo $row['menu_type'] ?></span>
+                            <label for="" class="labelType">Menu Type:&nbsp;<span
+                                    class="menuType"><?php echo $row['menu_type'] ?></span>
                             </label>
                             <label><strong>Date Created:</strong> <span><?php echo $row['created_at'] ?></span></label>
                             <label><strong>Date Updated:</strong> <span><?php echo $row['updated_at'] ?></span></label>
@@ -213,8 +216,8 @@
 
                         <div class="card-footer bg-white border-white d-flex p-0 ">
                             <!-- <a class="details"><i class="fa fa-info ms-5 p-3"></i></a> -->
-                            <button class="btn btn-secondary w-100 p-0 " name="update" data-bs-toggle="modal"
-                                data-bs-target="#updateMenu"><i class="fa fa-pen p-3  text-center"></i>Edit</button>
+                            <button class="btn btn-info w-100 p-0 update" name="update"><i
+                                    class="fa fa-pen p-3  text-center"></i>Edit</button>
 
                         </div>
 
@@ -234,45 +237,48 @@
                         <div class="modal-content">
                             <div
                                 class="modal-header p-3 text-center border-white align-items-center justify-content-center">
-                                <h5 class="modal-title " id="exampleModalLabel" style="margin-left:150px">Add New Menu
+                                <h5 class="modal-title " id="exampleModalLabel" style="margin-left:150px">Edit Menu
                                 </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <form action="" method="post">
-                                    <!-- <input type="hidden" id="menuNo" name="menuNo" value=""> -->
+                                    <input type="hidden" id="menuNo" name="menuNo" value="">
                                     <div class="form-floating mb-3">
                                         <input type="text" class="form-control p-1" name="menuName" id="menuName"
                                             placeholder="Menu Name">
                                         <label for="name">Menu Name</label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control p-1" id="menuPhoto" name="photo"
+                                        <input type="text" class="form-control p-1" id="menuPic" name="photo"
                                             placeholder="Photo">
                                         <label for="menuPhoto">Photo</label>
                                     </div>
-                                    <select class="form-select" name="menuType" aria-label="Default select example">
+                                    <select class="form-select" name="menuType" aria-label="Default select example"
+                                        id="menuType">
                                         <option selected>Menu Type</option>
                                         <option value="breakfast">Breakfast</option>
                                         <option value="lunch">Lunch</option>
                                         <option value="dinner">Dinner</option>
                                         <option value="dessert">Dessert</option>
+                                         <option value="drinks">Drinks</option>
                                     </select><br>
-                                    <select class="form-select" name="availabilty" aria-label="Default select example">
+                                    <select class="form-select" name="availabilty" aria-label="Default select example"
+                                        id="availability">
                                         <option selected>Availability</option>
                                         <option value="available">Available</option>
                                         <option value="not available">Unavailable</option>
                                     </select><br>
                                     <div class="form-floating mb-3">
-                                        <input type="number" class="form-control p-1" id="menuPrice" name="menuPrice"
+                                        <input type="text" class="form-control p-1" id="menuPrices" name="menuPrice"
                                             placeholder="Price">
                                         <label for="menuPrice">Price</label>
                                     </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" name="updateMenu" class="btn btn-primary">Add menu</button>
+                                <button type="submit" name="updateMenu" class="btn btn-primary">Edit menu</button>
                             </div>
                             </form>
                         </div>
@@ -280,12 +286,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
     <!-- ====END OF MODAL==== -->
+
     <div class="menu container" id="breakfast" style="display:none">
         <h4 class="mt-5" style="margin-left:15%">BreakFast</h4>
         <hr style="width:75%;margin-left:10%">
-        <div class="row  mt-5" style="margin-left:150px">
+        <div class="row  mt-5" style="margin-left:1%">
             <?php
                     include_once('../admin/connection.php');
                     // echo $_SESSION['UserId'];
@@ -301,12 +308,66 @@
                     while($row = $result->fetch_assoc()){
 
                     ?>
+            <!-- Modal for update-->
+            <div class="modal fade" id="updateMenu2" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="">
+                        <div
+                            class="modal-header p-3 text-center border-white align-items-center justify-content-center">
+                            <h5 class="modal-title " id="exampleModalLabel" style="margin-left:150px">Edit Menu
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post">
+                                <input type="hidden" id="menuNo" name="menuNo" value="<?php echo $row['menu_id']?>">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control p-1" name="menuName" id="menuName"
+                                        placeholder="Menu Name" value="<?php echo $row['menu_name'] ?>">
+                                    <label for="name">Menu Name</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control p-1" id="menuPic" name="photo"
+                                        placeholder="Photo" value="<?php echo $row['menu_photo'] ?>">
+                                    <label for="menuPhoto">Photo</label>
+                                </div>
+                                <select class="form-select" name="menuType" aria-label="Default select example"
+                                    id="menuType" value="<?php echo $row['menu_type'] ?>">
 
+                                    <option value="breakfast">Breakfast</option>
+                                    <option value="lunch">Lunch</option>
+                                    <option value="dinner">Dinner</option>
+                                    <option value="dessert">Dessert</option>
+                                     <option value="drinks">Drinks</option>
+                                </select><br>
+                                <select class="form-select" name="availabilty" aria-label="Default select example"
+                                    id="availability" value="<?php echo $row['availability'] ?>">
+
+                                    <option value="available">Available</option>
+                                    <option value="not available">Unavailable</option>
+                                </select><br>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control p-1" id="menuPrices" name="menuPrice"
+                                        placeholder="Price" value="<?php echo $row['price'] ?>">
+                                    <label for="menuPrice">Price</label>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" name="updateMenu" class="btn btn-primary">Edit menu</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====END OF MODAL==== -->
             <div class="col-3 md-4 card m-3 p-3 w-100">
 
                 <div class="body">
-                    <div class="card-header p-0 mt-1 bg-white text-center" style="border:0px solid white">
-                        <div class="card-header d-flex">
+                    <div class="card-header p-0 mt-1 bg-white text-center div1" style="border:0px solid white">
+                        <div class="card-header d-flex div2">
                             <input type="hidden" class="id" value="<?php echo $row['menu_id'] ?>">
                             <label for="">Product ID:</label>
                             <span class="menuId float-start"><?php echo $row['menu_id'] ?></span><br>
@@ -317,9 +378,10 @@
                         </span>
 
                     </div>
+
                     <input type="hidden" class="photo" value="<?php echo $row['menu_photo'] ?>">
                     <img id="images" class="img-fluid" src="<?php echo $row['menu_photo'] ?>">
-                    <div class="ms-5 mb-0" style="font-size:16px">
+                    <div class="ms-5 mb-0 divPrice" style="font-size:16px">
                         <span class="menuPrice ">
                             <p class="mt-2" style="font-size:25px;margin-left:25%"><?php echo "₱".$row['price'] ?>
                             </p>
@@ -327,7 +389,8 @@
 
                     </div>
                     <div class="container justify-content-center">
-                        <label for="">Menu Type:&nbsp;<span class="menuType"><?php echo $row['menu_type'] ?></span>
+                        <label for="" class="labelType">Menu Type:&nbsp;<span
+                                class="menuType"><?php echo $row['menu_type'] ?></span>
                         </label>
                         <label><strong>Date Created:</strong> <span><?php echo $row['created_at'] ?></span></label>
                         <label><strong>Date Updated:</strong> <span><?php echo $row['updated_at'] ?></span></label>
@@ -335,27 +398,31 @@
 
                     <div class="card-footer bg-white border-white d-flex p-0 ">
                         <!-- <a class="details"><i class="fa fa-info ms-5 p-3"></i></a> -->
-                        <button class="btn btn-secondary w-100 p-0 " name="update" data-bs-toggle="modal"
-                            data-bs-target="#updateMenu"><i class="fa fa-pen p-3  text-center"></i>Edit</button>
+                        <button class="btn btn-info w-100 p-0 " data-bs-toggle="modal" data-bs-target="#updateMenu2"
+                            name="update"><i class="fa fa-pen p-3  text-center"></i>Edit</button>
 
                     </div>
 
                 </div>
+
             </div>
+
+
+
             <?php
           }
         }
       }
           ?>
+            <!-- </div> -->
         </div>
-    </div>
     </div>
 
     <!--==Lunch Section ===  -->
     <div class="menu container" id="lunch" style="display:none">
         <h4 class="mt-5" style="margin-left:15%">Lunch</h4>
         <hr style="width:75%;margin-left:10%">
-        <div class="row   mt-5 " style="margin-left:150px">
+        <div class="row   mt-5 " style="margin-left:1%">
             <?php
                     include_once('../admin/connection.php');
                     // echo $_SESSION['UserId'];
@@ -371,6 +438,61 @@
                     while($row = $result->fetch_assoc()){
 
                     ?>
+            <!-- Modal for update-->
+            <div class="modal fade" id="updateMenu3" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="">
+                        <div
+                            class="modal-header p-3 text-center border-white align-items-center justify-content-center">
+                            <h5 class="modal-title " id="exampleModalLabel" style="margin-left:150px">Edit Menu
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post">
+                                <input type="hidden" id="menuNo" name="menuNo" value="<?php echo $row['menu_id']?>">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control p-1" name="menuName" id="menuName"
+                                        placeholder="Menu Name" value="<?php echo $row['menu_name'] ?>">
+                                    <label for="name">Menu Name</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control p-1" id="menuPic" name="photo"
+                                        placeholder="Photo" value="<?php echo $row['menu_photo'] ?>">
+                                    <label for="menuPhoto">Photo</label>
+                                </div>
+                                <select class="form-select" name="menuType" aria-label="Default select example"
+                                    id="menuType" value="<?php echo $row['menu_type'] ?>">
+
+                                    <option value="breakfast">Breakfast</option>
+                                    <option value="lunch">Lunch</option>
+                                    <option value="dinner">Dinner</option>
+                                    <option value="dessert">Dessert</option>
+                                    <option value="drinks">Drinks</option>
+                                </select><br>
+                                <select class="form-select" name="availabilty" aria-label="Default select example"
+                                    id="availability" value="<?php echo $row['availability'] ?>">
+
+                                    <option value="available">Available</option>
+                                    <option value="not available">Unavailable</option>
+                                </select><br>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control p-1" id="menuPrices" name="menuPrice"
+                                        placeholder="Price" value="<?php echo $row['price'] ?>">
+                                    <label for="menuPrice">Price</label>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" name="updateMenu" class="btn btn-primary">Add menu</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====END OF MODAL==== -->
             <div class="col-3 md-4 card m-3 p-3 w-100">
 
                 <div class="body">
@@ -404,8 +526,8 @@
 
                     <div class="card-footer bg-white border-white d-flex p-0 ">
                         <!-- <a class="details"><i class="fa fa-info ms-5 p-3"></i></a> -->
-                        <button class="btn btn-secondary w-100 p-0 " name="update" data-bs-toggle="modal"
-                            data-bs-target="#updateMenu"><i class="fa fa-pen p-3  text-center"></i>Edit</button>
+                        <button class="btn btn-info w-100 p-0 " name="update" data-bs-toggle="modal"
+                            data-bs-target="#updateMenu3"><i class="fa fa-pen p-3  text-center"></i>Edit</button>
 
                     </div>
 
@@ -419,12 +541,12 @@
           ?>
         </div>
     </div>
-    </div>
+    <!-- </div> -->
     <!-- ===Dinner Section=== -->
     <div class="menu container" id="dinner" style="display:none">
         <h4 class="mt-5" style="margin-left:15%">Dinner</h4>
         <hr style="width:75%;margin-left:10%">
-        <div class="row mt-5 " style="margin-left:150px">
+        <div class="row mt-5 " style="margin-left:1%">
             <?php
                     include_once('../admin/connection.php');
                     // echo $_SESSION['UserId'];
@@ -440,6 +562,61 @@
                     while($row = $result->fetch_assoc()){
 
                     ?>
+            <!-- Modal for update-->
+            <div class="modal fade" id="updateMenu5" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="">
+                        <div
+                            class="modal-header p-3 text-center border-white align-items-center justify-content-center">
+                            <h5 class="modal-title " id="exampleModalLabel" style="margin-left:150px">Edit Menu
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post">
+                                <input type="hidden" id="menuNo" name="menuNo" value="<?php echo $row['menu_id']?>">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control p-1" name="menuName" id="menuName"
+                                        placeholder="Menu Name" value="<?php echo $row['menu_name'] ?>">
+                                    <label for="name">Menu Name</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control p-1" id="menuPic" name="photo"
+                                        placeholder="Photo" value="<?php echo $row['menu_photo'] ?>">
+                                    <label for="menuPhoto">Photo</label>
+                                </div>
+                                <select class="form-select" name="menuType" aria-label="Default select example"
+                                    id="menuType" value="<?php echo $row['menu_type'] ?>">
+
+                                    <option value="breakfast">Breakfast</option>
+                                    <option value="lunch">Lunch</option>
+                                    <option value="dinner">Dinner</option>
+                                    <option value="dessert">Dessert</option>
+                                    <option value="drinks">Drinks</option>
+                                </select><br>
+                                <select class="form-select" name="availabilty" aria-label="Default select example"
+                                    id="availability" value="<?php echo $row['availability'] ?>">
+
+                                    <option value="available">Available</option>
+                                    <option value="not available">Unavailable</option>
+                                </select><br>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control p-1" id="menuPrices" name="menuPrice"
+                                        placeholder="Price" value="<?php echo $row['price'] ?>">
+                                    <label for="menuPrice">Price</label>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" name="updateMenu" class="btn btn-primary">Add menu</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====END OF MODAL==== -->
             <div class="col-3 md-4 card m-3 p-3 w-100">
 
                 <div class="body">
@@ -467,14 +644,15 @@
                     <div class="container justify-content-center">
                         <label for="">Menu Type:&nbsp;<span class="menuType"><?php echo $row['menu_type'] ?></span>
                         </label>
-                        <label><strong>Date Created:</strong> <span><?php echo $row['created_at'] ?></span></label>
+                        <label><strong>Date Created:</strong> <span
+                                class=""><?php echo $row['created_at'] ?></span></label>
                         <label><strong>Date Updated:</strong> <span><?php echo $row['updated_at'] ?></span></label>
                     </div>
 
                     <div class="card-footer bg-white border-white d-flex p-0 ">
                         <!-- <a class="details"><i class="fa fa-info ms-5 p-3"></i></a> -->
-                        <button class="btn btn-secondary w-100 p-0 " name="update" data-bs-toggle="modal"
-                            data-bs-target="#updateMenu"><i class="fa fa-pen p-3  text-center"></i>Edit</button>
+                        <button class="btn btn-info w-100 p-0 " name="update" data-bs-toggle="modal"
+                            data-bs-target="#updateMenu5"><i class="fa fa-pen p-3  text-center"></i>Edit</button>
 
                     </div>
 
@@ -487,12 +665,13 @@
           ?>
         </div>
     </div>
-    </div>
+    <!-- </div> -->
     <!-- ===Dessert Section==== -->
     <div class="menu container" id="dessert" style="display:none">
+
         <h4 class="mt-5" style="margin-left:15%">Dessert</h4>
         <hr style="width:75%;margin-left:10%">
-        <div class="row  mt-5 " style="margin-left:150px">
+        <div class="row  mt-5 " style="margin-left:1%">
             <?php
                     include_once('../admin/connection.php');
                     // echo $_SESSION['UserId'];
@@ -508,6 +687,183 @@
                     while($row = $result->fetch_assoc()){
 
                     ?>
+            <!-- Modal for update-->
+            <div class="modal fade" id="updateMenu4" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="">
+                        <div
+                            class="modal-header p-3 text-center border-white align-items-center justify-content-center">
+                            <h5 class="modal-title " id="exampleModalLabel" style="margin-left:150px">Edit Menu
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post">
+                                <input type="hidden" id="menuNo" name="menuNo" value="<?php echo $row['menu_id']?>">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control p-1" name="menuName" id="menuName"
+                                        placeholder="Menu Name" value="<?php echo $row['menu_name'] ?>">
+                                    <label for="name">Menu Name</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control p-1" id="menuPic" name="photo"
+                                        placeholder="Photo" value="<?php echo $row['menu_photo'] ?>">
+                                    <label for="menuPhoto">Photo</label>
+                                </div>
+                                <select class="form-select" name="menuType" aria-label="Default select example"
+                                    id="menuType" value="<?php echo $row['menu_type'] ?>">
+
+                                    <option value="breakfast">Breakfast</option>
+                                    <option value="lunch">Lunch</option>
+                                    <option value="dinner">Dinner</option>
+                                    <option value="dessert">Dessert</option>
+                                     <option value="drinks">Drinks</option>
+                                </select><br>
+                                <select class="form-select" name="availabilty" aria-label="Default select example"
+                                    id="availability" value="<?php echo $row['availability'] ?>">
+
+                                    <option value="available">Available</option>
+                                    <option value="not available">Unavailable</option>
+                                </select><br>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control p-1" id="menuPrices" name="menuPrice"
+                                        placeholder="Price" value="<?php echo $row['price'] ?>">
+                                    <label for="menuPrice">Price</label>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" name="updateMenu" class="btn btn-primary">Add menu</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====END OF MODAL==== -->
+            <div class="col-3 md-4 card m-3 p-3 w-100">
+
+                <div class="body">
+                    <div class="card-header p-0 mt-1 bg-white text-center" style="border:0px solid white">
+                        <div class="card-header d-flex">
+                            <input type="hidden" class="id" value="<?php echo $row['menu_id'] ?>">
+                            <label for="">Product ID:</label>
+                            <span class="menuId float-start"><?php echo $row['menu_id'] ?></span><br>
+                            <span class="availability ms-4"><?php echo $row['availability'] ?></span><br>
+                        </div>
+                        <span class="menuName">
+                            <h5><?php echo $row['menu_name'] ?></h6>
+                        </span>
+
+                    </div>
+                    <input type="hidden" class="photo" value="<?php echo $row['menu_photo'] ?>">
+                    <img id="images" class="img-fluid" src="<?php echo $row['menu_photo'] ?>">
+                    <div class="ms-5 mb-0" style="font-size:16px">
+                        <span class="menuPrice ">
+                            <p class="mt-2" style="font-size:25px;margin-left:25%"><?php echo "₱".$row['price'] ?>
+                            </p>
+                        </span>
+
+                    </div>
+                    <div class="container justify-content-center ">
+                        <label for="">Menu Type:&nbsp;<span class="menuType"><?php echo $row['menu_type'] ?></span>
+                        </label>
+                        <label><strong>Date Created:</strong> <span><?php echo $row['created_at'] ?></span></label>
+                        <label><strong>Date Updated:</strong> <span><?php echo $row['updated_at'] ?></span></label>
+                    </div>
+
+                    <div class="card-footer bg-white border-white d-flex p-0 ">
+                        <!-- <a class="details"><i class="fa fa-info ms-5 p-3"></i></a> -->
+                        <button class="btn btn-info w-100 p-0" data-bs-toggle="modal" data-bs-target="#updateMenu4"
+                            name="update"><i class="fa fa-pen p-3  text-center"></i>Edit</button>
+
+                    </div>
+
+                </div>
+            </div>
+            <?php
+          }
+        }
+      }
+          ?>
+        </div>
+    </div>
+    <!-- ===Drinks Section=== -->
+    <div class="menu container" id="drinks" style="display:none">
+        <h4 class="mt-5" style="margin-left:15%">Drinks</h4>
+        <hr style="width:75%;margin-left:10%">
+        <div class="row mt-5 " style="margin-left:1%">
+            <?php
+                    include_once('../admin/connection.php');
+                    // echo $_SESSION['UserId'];
+                    if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                    }else{
+
+                    $sql="select * from menu where menu_type='drinks' order by menu_name asc";
+                    $result = $conn->query($sql);
+
+                    if ($result->num_rows > 0) {
+
+                    while($row = $result->fetch_assoc()){
+
+                    ?>
+            <!-- Modal for update-->
+            <div class="modal fade" id="updateMenu6" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="">
+                        <div
+                            class="modal-header p-3 text-center border-white align-items-center justify-content-center">
+                            <h5 class="modal-title " id="exampleModalLabel" style="margin-left:150px">Edit Menu
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post">
+                                <input type="hidden" id="menuNo" name="menuNo" value="<?php echo $row['menu_id']?>">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control p-1" name="menuName" id="menuName"
+                                        placeholder="Menu Name" value="<?php echo $row['menu_name'] ?>">
+                                    <label for="name">Menu Name</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control p-1" id="menuPic" name="photo"
+                                        placeholder="Photo" value="<?php echo $row['menu_photo'] ?>">
+                                    <label for="menuPhoto">Photo</label>
+                                </div>
+                                <select class="form-select" name="menuType" aria-label="Default select example"
+                                    id="menuType" value="<?php echo $row['menu_type'] ?>">
+
+                                    <option value="breakfast">Breakfast</option>
+                                    <option value="lunch">Lunch</option>
+                                    <option value="dinner">Dinner</option>
+                                    <option value="dessert">Dessert</option>
+                                    <option value="drinks">Drinks</option>
+                                </select><br>
+                                <select class="form-select" name="availabilty" aria-label="Default select example"
+                                    id="availability" value="<?php echo $row['availability'] ?>">
+
+                                    <option value="available">Available</option>
+                                    <option value="not available">Unavailable</option>
+                                </select><br>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control p-1" id="menuPrices" name="menuPrice"
+                                        placeholder="Price" value="<?php echo $row['price'] ?>">
+                                    <label for="menuPrice">Price</label>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" name="updateMenu" class="btn btn-primary">Add menu</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====END OF MODAL==== -->
             <div class="col-3 md-4 card m-3 p-3 w-100">
 
                 <div class="body">
@@ -535,14 +891,15 @@
                     <div class="container justify-content-center">
                         <label for="">Menu Type:&nbsp;<span class="menuType"><?php echo $row['menu_type'] ?></span>
                         </label>
-                        <label><strong>Date Created:</strong> <span><?php echo $row['created_at'] ?></span></label>
+                        <label><strong>Date Created:</strong> <span
+                                class=""><?php echo $row['created_at'] ?></span></label>
                         <label><strong>Date Updated:</strong> <span><?php echo $row['updated_at'] ?></span></label>
                     </div>
 
                     <div class="card-footer bg-white border-white d-flex p-0 ">
                         <!-- <a class="details"><i class="fa fa-info ms-5 p-3"></i></a> -->
-                        <button class="btn btn-secondary w-100 p-0 " name="update" data-bs-toggle="modal"
-                            data-bs-target="#updateMenu"><i class="fa fa-pen p-3  text-center"></i>Edit</button>
+                        <button class="btn btn-info w-100 p-0 " name="update" data-bs-toggle="modal"
+                            data-bs-target="#updateMenu6"><i class="fa fa-pen p-3  text-center"></i>Edit</button>
 
                     </div>
 
@@ -555,6 +912,8 @@
           ?>
         </div>
     </div>
+    </div>
+
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
@@ -598,26 +957,33 @@
 
 
         //trigger modal for updating menu
-        $(".update").click(function() {
-            var menuId = $(this).siblings('.id').val();
-            var menuName = $(this).siblings('span.menuName').children().html();
-            var menuPhoto = $(this).siblings('input.photo').val();
-            console.log(menuId + menuName + menuPhoto);
-            var menuPrice = $(this).siblings('span.menuPrice').html();
-            var menuPrice = menuPrice.substr(3);
+        $(document).on("click", ".update", function() {
+
+            var menuId = $(this).parent().siblings('.div1').children('.div2').children('.id').val();
+            var menuName = $(this).parent().siblings('.div1').children('.menuName').children().html();
+            var menuPhoto = $(this).parent().siblings('input.photo').val();
+            // console.log(menuId + menuName + menuPhoto);
+            var menuPrice = $(this).parent().siblings('.divPrice').children('.menuPrice').children()
+                .html();
+            menuPrice = menuPrice.substr(1);
+
+
             $('#updateMenu').modal({
                 backdrop: 'static',
                 keyboard: false
             })
-            $('#menuType').val($(this).siblings(".menuType").html())
-            $('#availability').val($(this).siblings(".availability").html())
+            $('#updateMenu').modal('toggle');
+            $('#menuType').val($(this).parent().siblings('.justify-content-center').children(
+                '.labelType').children('.menuType').html())
+            $('#availability').val($(this).parent().siblings('.div1').children('.div2').children(
+                '.availability').html())
 
-            $('#updateMenu').modal('show');
+            console.log('clicked')
             $('#menuName').val(menuName);
-            $('#menuPhoto').val(menuPhoto);
-            $('#menuPrice').val(menuPrice);
+            $('#menuPic').val(menuPhoto);
+            $('#menuPrices').val(menuPrice);
             $("#menuNo").val(menuId)
-            $(".close").click(() => {
+            $(".close").click(function() {
                 $('#updateMenu').modal('hide');
 
             })
